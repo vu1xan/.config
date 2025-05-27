@@ -1,4 +1,4 @@
-#default layout (can be bsp, stack and float)
+# layout (can be bsp, stack and float)
 yabai -m config layout bsp
 
 # New window spawns to the right if vertical split, or bottom if horizontal split
@@ -13,6 +13,7 @@ yabai -m config window_gap 2
 
 # center mouse on window with focus
 yabai -m config mouse_follows_focus on
+yabai -m config focus_follows_mouse          autofocus
 
 # modifier for clicking and dragging with mouse
 # yabai -m config mouse_modifier alt
@@ -35,4 +36,4 @@ yabai -m rule --add label="Firfox PIP" app="^Firefox Developer Edition$" title="
 # need to partially disable sip to enable this
 # yabai -m rule --add app="^Music$" sticky=on layer=above manage=off
 
-yabai -m config external_bar all:20:0
+# yabai -m config external_bar all:0:32

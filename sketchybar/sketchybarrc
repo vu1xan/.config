@@ -17,7 +17,7 @@ UTIL_DIR="$CONFIG_DIR/util"
 # If you are looking for other colors, see the color picker:
 # https://felixkratz.github.io/SketchyBar/config/tricks#color-picker
 
-sketchybar --bar position=top height=20 blur_radius=30 color=$BAR_COLOR
+sketchybar --bar position=bottom height=32 blur_radius=30 color=$BAR_COLOR
 
 ##### Changing Defaults #####
 # We now change some default values, which are applied to all further items.
