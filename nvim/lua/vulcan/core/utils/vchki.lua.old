@@ -1,0 +1,141 @@
+-- filter which-key warnings
+-- local orig_notify = vim.notify
+-- vim.notify = function(msg, level, opts)
+-- 	if msg:match("which%-key") and level == vim.log.levels.WARN then
+-- 		return
+-- 	end
+-- 	orig_notify(msg, level, opts)
+-- end
+
+return {
+	"folke/which-key.nvim",
+	event = "VeryLazy",
+	init = function()
+		vim.o.timeout = true
+		vim.o.timeoutlen = 500
+	end,
+	opts = {
+		preset = "helix",
+		-- window = {
+		-- 	border = "single", -- or "rounded", "none", etc.
+		-- 	position = "bottom", -- "bottom" is required, "top" is also possible
+		-- 	margin = { 1, 0, 1, 0 }, -- top, right, bottom, left
+		-- 	padding = { 1, 2, 1, 2 }, -- space inside the window
+		-- 	winblend = 0, -- transparency
+		-- 	zindex = 1000,
+		-- },
+		layout = {
+			align = "right", -- ⬅️ this makes the keys right-aligned (bottom-right feel)
+		},
+	},
+	config = function()
+		local wk = require("which-key")
+
+		wk.setup({})
+
+		-- Define all keymaps here so they run *after* which-key loads
+		wk.register({
+			-- Telescope
+			f = {
+				name = "+[f]ind",
+				f = { "<cmd>Telescope find_files<cr>", "[f]iles" },
+				r = { "<cmd>Telescope oldfiles<cr>", "[r]ecents" },
+				M = { "<cmd>Telescope man_pages<cr>", "[M]an pages" },
+				b = { "<cmd>Telescope current_buffer_fuzzy_find<cr>", "[b]uffer fuzzy find" },
+				c = { "<cmd>Telescope grep_string<cr>", "string under [c]ursor in cwd" },
+				d = { "<cmd>Telescope buffers<cr>", "buffers" },
+				D = { "<cmd>Telescope diagnostics bufnr=0<CR>", "buffer [D]iagnostics" }, -- show  diagnostics for file
+				g = { "<cmd>Telescope live_grep<cr>", "[g]rep" },
+				h = { "<cmd>Telescope help_tags<cr>", "[h]elp" },
+				j = { "<cmd>Telescope jumplist<cr>", "[j]umplist" },
+				k = { "<cmd>Telescope keymaps<cr>", "[k]eymaps" },
+				l = { "<cmd>Telescope loclist<cr>", "[l]oclist" },
+				m = { "<cmd>Telescope marks<cr>", "[m]arks" },
+				q = { "<cmd>Telescope quickfix<cr>", "[q]uickfix" },
+				t = { "<cmd>TodoTelescope<cr>", "[T]ODO's" },
+			},
+
+			-- window management
+			s = {
+				name = "+[s]plit window",
+				v = { "<C-w>v", "[v]ertically" },
+				h = { "<C-w>h", "[h]orizontally" },
+				e = { "<C-w>e", "make splits [e]qual" },
+				o = { "<cmd>only<cr>", "[o]nly this remains" },
+			},
+
+			-- tabs management
+			t = {
+				name = "+[t]abs",
+				n = { "<cmd>tabnew<CR>", "[n]ew" },
+				f = { "<cmd>tabnew %<CR>", "current bu[f]fer in new tab" },
+				-- ["<tab>"] = { "<cmd>tabn<CR>", 'next tab' },
+				-- ["<S-tab>"] = { "<cmd>tabp<CR>", 'previous tab' },
+				c = {
+					function()
+						vim.cmd("tabnew " .. vim.fn.getcwd())
+					end,
+					"new tab with [c]wd",
+				},
+			},
+		}, { prefix = "<leader>" })
+
+		wk.register({
+			m = {
+				name = "iron [m]ark",
+				c = "motion",
+				d = "remove mark",
+			},
+		}, { prefix = "<leader>" })
+
+		wk.register({
+			m = {
+				name = "iron [m]ark",
+				c = "visual",
+			},
+		}, { prefix = "<leader>", mode = "v" })
+
+		wk.register({
+			s = {
+				name = "iron [s]end",
+				c = "motion",
+				f = "[f]ile",
+				l = "[l]ine",
+				p = "[p]aragraph",
+				u = "until [c]ursor",
+				m = "[m]ark",
+				b = "code [b]lock",
+				n = "code block [n] move",
+				["<cr>"] = "empty line in repl",
+				[" "] = "interrupt",
+				q = "exit",
+				x = "clear",
+			},
+		}, { prefix = "<leader>" })
+
+		wk.register({
+			s = {
+				name = "iron [s]end",
+				c = "visual",
+			},
+		}, { prefix = "<leader>", mode = "v" })
+
+		wk.register({
+			r = {
+				name = "[r]epl",
+				r = "toggle",
+				R = "[R]estart",
+				v = "[v]ertical",
+				z = "hori[z]ontal",
+				f = {
+					"<cmd>IronFocus<cr>",
+					"[f]ocus",
+				},
+				h = {
+					"<cmd>IronHide<cr>",
+					"[h]ide",
+				},
+			},
+		}, { prefix = "<leader>" })
+	end,
+}
