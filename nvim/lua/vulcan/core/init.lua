@@ -1,2 +1,2 @@
-require("vulcan.core.options")
 require("vulcan.core.keymaps")
+require("vulcan.core.options")
